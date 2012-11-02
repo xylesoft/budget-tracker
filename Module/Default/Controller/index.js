@@ -8,7 +8,9 @@ require('../../../Controller/Controller');
 Xylesoft.controllers.DefaultIndexController = new Class({
     Extends: Xylesoft.component.Controller,
     name: 'Xylesoft.controllers.DefaultIndexController',
-    executeGET: function(request) {
-	return 'ImHere';
+    module: 'Default',
+    executeGET: function(request, attributes) {
+	attributes.name = 'Jeramy Wenserit';
+	return 'IndexSuccess';
     }
 });

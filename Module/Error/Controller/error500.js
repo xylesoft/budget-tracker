@@ -9,6 +9,6 @@ Xylesoft.controllers.ErrorsError500Controller = new Class({
     Extends: Xylesoft.component.Controller,
     name: 'Xylesoft.controllers.ErrorsError500Controller',
     executeGET: function(request) {
-	return 'ImHere';
+	return 'HTTP Server Error 500 occured.';
     }
 });

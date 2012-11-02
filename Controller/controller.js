@@ -7,6 +7,7 @@ require('mootools');
 Xylesoft.component.Controller = new Class({
     Implements: [Options],
     name: 'Xylesoft.component.Controller',
+    module: null,
     options: {
 	headers: {
 	    httpStatus: 200
@@ -23,14 +24,17 @@ Xylesoft.component.Controller = new Class({
      * Note * can be executeGET(), executePOST(), executePUT() or executeDELETE(). How ever they
      *          must exist in the extended class.
      */
-    dispatch: function(request, response) {
+    dispatch: function(request) {
 	var func = 'execute' + request.method.toUpperCase();
 	console.log('Triggering ' + this.name + '.' + func + '()');
-	var viewName = this[func](request);
+	var attributes = {};
+	var viewName = this[func](request, attributes);
 
-	response.writeHead(200, {"Content-Type": "text/plain"});
-	response.write("Executing view: " + viewName);
-	response.end();
+	var container = {
+	    "attributes": attributes,
+	    "view": this.module + viewName
+	};
 
+	return container;
     }
 });

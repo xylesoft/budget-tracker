@@ -12,7 +12,8 @@ Xylesoft={
     log: function(message) {
 	console.log('['+(new Date()).toString()+'] ' + message);
     },
-    controllers: {}
+    controllers: {},
+    views: {}
 };
 var baseParts = process.argv[1].split('/');
 delete baseParts[baseParts.length-1];
@@ -39,11 +40,9 @@ Xylesoft.httpServer = http.createServer(function(request, response) {
 
     var controller = Xylesoft.controllerFactory.find(route);
 
-    console.log(controller);
-    controller.dispatch(request, response);
-//    console.log(.dispatch(request, response);
+    var container = controller.dispatch(request);
 
-//    response.writeHead(200, {"Content-Type": "text/plain"});
-//    response.write("Hello World");
-//    response.end();
+    var view = new Xylesoft.views[container.view];
+    view.executeText(request, container.attributes, response);
+
 }).listen(8080);

@@ -8,7 +8,8 @@ require('../../../Controller/Controller');
 Xylesoft.controllers.ErrorsError404Controller = new Class({
     Extends: Xylesoft.component.Controller,
     name: 'Xylesoft.controllers.ErrorsError404Controller',
+    module: 'Errors',
     executeGET: function(request) {
-	return 'ImHere';
+	return 'Error404';
     }
 });
