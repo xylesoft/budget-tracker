@@ -31,10 +31,10 @@ Xylesoft.controllerFactory = new Xylesoft.component.ControllerFactory({
     moduleDir: Xylesoft.basedir
 });
 
-require('./View/viewFactory');
-Xylesoft.viewFactory = new Xylesoft.component.viewFactory({
-    moduleDir: Xylesoft.basedir
-});
+//require('./View/viewFactory');
+//Xylesoft.viewFactory = new Xylesoft.component.viewFactory({
+//    moduleDir: Xylesoft.basedir
+//});
 
 Xylesoft.httpServer = http.createServer(function(request, response) {
     Xylesoft.log('IP: ' + request.connection.remoteAddress +' Request ' + request.method + ': URL=' + request.url);
