@@ -9,15 +9,15 @@ Xylesoft.controllers.ErrorError500Controller = new Class({
     Extends: Xylesoft.component.Controller,
     name: 'Xylesoft.controllers.ErrorError500Controller',
     executeGET: function(request) {
-	return 'Error500';
+        return 'Error500';
     },
     executePOST: function(request) {
-	return 'Error500';
+        return 'Error500';
     },
     executePUT: function(request) {
-	return 'Error500';
+        return 'Error500';
     },
     executeDELETE: function(request) {
-	return 'Error500';
+        return 'Error500';
     }
 });

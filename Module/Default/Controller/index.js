@@ -10,7 +10,7 @@ Xylesoft.controllers.DefaultIndexController = new Class({
     name: 'Xylesoft.controllers.DefaultIndexController',
     module: 'Default',
     executeGET: function(request, attributes) {
-	attributes.name = 'Jeramy Wenserit';
-	return 'IndexSuccess';
+        attributes.name = 'Jeramy Wenserit';
+        return 'IndexSuccess';
     }
 });

@@ -10,17 +10,17 @@ Xylesoft.controllers.ErrorError404Controller = new Class({
     name: 'Xylesoft.controllers.ErrorError404Controller',
     module: 'Error',
     executeGET: function(request, attributes) {
-	attributes.headers = {};
-	attributes.headers['Content-Type'] = 'application/json';
-	return 'Error404';
+        attributes.headers = {};
+        attributes.headers['Content-Type'] = 'application/json';
+        return 'Error404';
     },
     executePOST: function(request) {
-	return 'Error404';
+        return 'Error404';
     },
     executePUT: function(request) {
-	return 'Error404';
+        return 'Error404';
     },
     executeDELETE: function(request) {
-	return 'Error404';
+        return 'Error404';
     }
 });

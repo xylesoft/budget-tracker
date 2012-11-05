@@ -9,32 +9,32 @@ Xylesoft.component.Controller = new Class({
     name: 'Xylesoft.component.Controller',
     module: null,
     options: {
-	headers: {
-	    httpStatus: 200
-	}
+        headers: {
+            httpStatus: 200
+        }
     },
     initialize: function(options) {
-	console.log('Xylesoft.component.Controller Loaded');
-	this.setOptions(options);
+        console.log('Xylesoft.component.Controller Loaded');
+        this.setOptions(options);
 
     },
 
-    /** 
+    /**
      * The dispatch method is responsible for triggering the correct execute*() routines.
      * Note * can be executeGET(), executePOST(), executePUT() or executeDELETE(). How ever they
      *          must exist in the extended class.
      */
     dispatch: function(request) {
-	var func = 'execute' + request.method.toUpperCase();
-	console.log('Triggering ' + this.name + '.' + func + '()');
-	var attributes = {};
-	var viewName = this[func](request, attributes);
+        var func = 'execute' + request.method.toUpperCase();
+        console.log('Triggering ' + this.name + '.' + func + '()');
+        var attributes = {};
+        var viewName = this[func](request, attributes);
 
-	var container = {
-	    "attributes": attributes,
-	    "view": this.module + viewName
-	};
+        var container = {
+            "attributes": attributes,
+            "view": this.module + viewName
+        };
 
-	return container;
+        return container;
     }
 });
