@@ -5,10 +5,19 @@ require('../../../Controller/Controller');
  *The Error 500 Controller
  *
  */
-Xylesoft.controllers.ErrorsError500Controller = new Class({
+Xylesoft.controllers.ErrorError500Controller = new Class({
     Extends: Xylesoft.component.Controller,
-    name: 'Xylesoft.controllers.ErrorsError500Controller',
+    name: 'Xylesoft.controllers.ErrorError500Controller',
     executeGET: function(request) {
-	return 'HTTP Server Error 500 occured.';
+	return 'Error500';
+    },
+    executePOST: function(request) {
+	return 'Error500';
+    },
+    executePUT: function(request) {
+	return 'Error500';
+    },
+    executeDELETE: function(request) {
+	return 'Error500';
     }
 });

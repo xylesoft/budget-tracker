@@ -20,14 +20,14 @@
 	    "404": {
 	        "name": "error.404",
 		"controller": "Error404",
-		"module": "Errors",
+		"module": "Error",
 		"methods": ["GET","DELETE","POST","PUT"],
 		"httpStatus": 404
 	    },
 	    "500": {
 	    	"name": "error.500",   
 		"controller": "Error500",
-		"module": "Errors",
+		"module": "Error",
 		"methods": ["GET","DELETE","POST","PUT"],
 		"httpStatus": 500
 	    }

@@ -46,9 +46,6 @@ Xylesoft.component.ControllerFactory = new Class({
 
 	    // require the controllers into Xylesoft.controllers.* 
 	    controllers.each(function(controller, index, array) {
-		//var controllerName = controller.substring(0,controller.length-3);
-		//controllerName = controllerName[0].toUpperCase() + controllerName.substring(1) + 'Controller';
-		//Xylesoft.controllers[module +  controllerName] = 
 		require(modulePath + '/' + controller);
 	    });
 	});

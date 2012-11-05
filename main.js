@@ -10,7 +10,7 @@ Xylesoft={
     basedir: null,
     component:{},
     log: function(message) {
-	console.log('['+(new Date()).toString()+'] ' + message);
+        console.log('['+(new Date()).toString()+'] ' + message);
     },
     controllers: {},
     views: {}
@@ -31,6 +31,11 @@ Xylesoft.controllerFactory = new Xylesoft.component.ControllerFactory({
     moduleDir: Xylesoft.basedir
 });
 
+require('./View/viewFactory');
+Xylesoft.viewFactory = new Xylesoft.component.viewFactory({
+    moduleDir: Xylesoft.basedir
+});
+
 Xylesoft.httpServer = http.createServer(function(request, response) {
     Xylesoft.log('IP: ' + request.connection.remoteAddress +' Request ' + request.method + ': URL=' + request.url);
 
@@ -42,7 +47,20 @@ Xylesoft.httpServer = http.createServer(function(request, response) {
 
     var container = controller.dispatch(request);
 
+    // make sure the view exists
+    if (! Xylesoft.views[container.view]) {
+        throw new Error('Can\'t find view `'+container.view+'`.');
+    }
     var view = new Xylesoft.views[container.view];
-    view.executeText(request, container.attributes, response);
 
+    // trigger the response
+    // bit hacky for determining the response content type
+    var responseType = (view.headers && view.headers['Content-Type']) || 'text/plain';
+    switch (responseType) {
+    case "application/json":
+        view.executeJson(Request, container.attributes, response); break;
+    case "text/plain":
+    default:
+        view.executeText(request, container.attributes, response); break;
+    }
 }).listen(8080);
