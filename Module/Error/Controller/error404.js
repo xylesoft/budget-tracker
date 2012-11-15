@@ -1,12 +1,12 @@
 require('mootools');
-require('../../../Controller/Controller');
+var Controller = require('../../../Controller/Controller');
 
 /**
  *The Error 404 Controller
  *
  */
-Xylesoft.controllers.ErrorError404Controller = new Class({
-    Extends: Xylesoft.component.Controller,
+module.exports = new Class({
+    Extends: Controller,
     name: 'Xylesoft.controllers.ErrorError404Controller',
     module: 'Error',
     executeGET: function(request, attributes) {

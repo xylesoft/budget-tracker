@@ -1,8 +1,9 @@
 require('mootools');
 
 /**
+ * The view for Page not Found 404 errors.
  */
-Xylesoft.views.ErrorError404 = new Class({
+module.exports = new Class({
     executeText: function(request, attributes, response) {
         response.writeHead(404, {
             "Content-Type": "text/plain"

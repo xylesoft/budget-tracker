@@ -1,8 +1,11 @@
 require('mootools');
 
 /**
+ * The view for Index Success.
  */
-Xylesoft.views.DefaultIndexSuccess = new Class({
+module.exports = new Class({
+//    Implements: [PlainTextResponse],
+
     executeText: function(request, attributes, response) {
         response.writeHead(200, {
             "Content-Type": "text/plain"

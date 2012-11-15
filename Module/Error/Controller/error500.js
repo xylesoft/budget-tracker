@@ -1,12 +1,12 @@
 require('mootools');
-require('../../../Controller/Controller');
+var Controller = require('../../../Controller/Controller');
 
 /**
  *The Error 500 Controller
  *
  */
-Xylesoft.controllers.ErrorError500Controller = new Class({
-    Extends: Xylesoft.component.Controller,
+module.exports = new Class({
+    Extends: Controller,
     name: 'Xylesoft.controllers.ErrorError500Controller',
     executeGET: function(request) {
         return 'Error500';

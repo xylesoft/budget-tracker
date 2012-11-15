@@ -1,7 +1,7 @@
-]require('mootools');
+require('mootools');
 var fs = require('fs');
 
-Xylesoft.component.Router = new Class({
+module.exports = new Class({
     Implements: [Options],
     options: {
         config: null

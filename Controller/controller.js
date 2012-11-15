@@ -4,7 +4,7 @@
  */
 require('mootools');
 
-Xylesoft.component.Controller = new Class({
+module.exports = new Class({
     Implements: [Options],
     name: 'Xylesoft.component.Controller',
     module: null,
@@ -14,9 +14,7 @@ Xylesoft.component.Controller = new Class({
         }
     },
     initialize: function(options) {
-        console.log('Xylesoft.component.Controller Loaded');
         this.setOptions(options);
-
     },
 
     /**

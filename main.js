@@ -5,62 +5,79 @@
 require('mootools');
 var http = require("http");
 
-Xylesoft={
-    version: '0.1',
-    basedir: null,
-    component:{},
-    log: function(message) {
-        console.log('['+(new Date()).toString()+'] ' + message);
-    },
-    controllers: {},
-    views: {}
-};
-var baseParts = process.argv[1].split('/');
-delete baseParts[baseParts.length-1];
-Xylesoft.basedir = baseParts.join('/').substring(0, baseParts.join('/').length-1);
-Xylesoft.log('XYLEOSFT NAMESPACE - Started @ ' +Xylesoft.basedir);
+/* Load the namespace */
+var Xylesoft = require('./Lib/xylesoft-namespace/xylesoft.js');
+Xylesoft.setVersion('0.1.1');
+Xylesoft.log('Xylesoft Namespace v' + Xylesoft.version + ' - Booted @ ' +Xylesoft.basedir);
+Xylesoft.addNamespace('controllers');
+Xylesoft.addNamespace('views');
 
 /* Load Dependancies */
-require('./Routing/router');
-Xylesoft.router = new Xylesoft.component.Router({
+Xylesoft.addNamespace('router');
+Xylesoft.addComponent('Router', require('./Routing/router'));
+Xylesoft.router = new (Xylesoft.getComponent('Router'))({
     config: Xylesoft.basedir + '/Config/defaults.json'
 });
 
-require('./Controller/controllerFactory');
-Xylesoft.controllerFactory = new Xylesoft.component.ControllerFactory({
-    moduleDir: Xylesoft.basedir
+Xylesoft.addNamespace('controllerFactory');
+Xylesoft.addComponent('controllerFactory', require('./Controller/controllerFactory'));
+
+Xylesoft.controllerFactory = new (Xylesoft.getComponent('controllerFactory'))({
+    moduleDir: Xylesoft.basedir + '/Module'
 });
+
+Xylesoft.addNamespace('viewFactory');
+Xylesoft.addComponent('viewFactory', require('./View/viewFactory'));
+
+Xylesoft.viewFactory = new (Xylesoft.getComponent('viewFactory'))({
+    moduleDir: Xylesoft.basedir + '/Module'
+});
+
+//console.log(Xylesoft);
+//process.exit();
 
 //require('./View/viewFactory');
 //Xylesoft.viewFactory = new Xylesoft.component.viewFactory({
 //    moduleDir: Xylesoft.basedir
 //});
 
+Xylesoft.addNamespace('httpServer');
 Xylesoft.httpServer = http.createServer(function(request, response) {
     Xylesoft.log('IP: ' + request.connection.remoteAddress +' Request ' + request.method + ': URL=' + request.url);
 
     var route = Xylesoft.router.find(request);
 
-    Xylesoft.log('Using route: ' + route.name);
-
-    var controller = Xylesoft.controllerFactory.find(route);
-
-    var container = controller.dispatch(request);
-
-    // make sure the view exists
-    if (! Xylesoft.views[container.view]) {
-        throw new Error('Can\'t find view `'+container.view+'`.');
+    Xylesoft.log('Using route: ' + route.name + ' = [ ' + route.pattern + ' ]');
+    
+    // Get the Controller
+    var controller = Xylesoft.controllerFactory.find(route.module, route.controller);
+    if (! controller) {
+        controller = Xylesoft.controllerFactory.find('Error', 'error404');
     }
-    var view = new Xylesoft.views[container.view];
+    
+    // Execute the controller.
+    var container = controller.dispatch(request);
+    
+    // Execute the view
+    var useViewModule = container.module || route.module; 
+    var view = Xylesoft.viewFactory.find(useViewModule, container.view);
 
-    // trigger the response
-    // bit hacky for determining the response content type
-    var responseType = (view.headers && view.headers['Content-Type']) || 'text/plain';
-    switch (responseType) {
-    case "application/json":
-        view.executeJson(Request, container.attributes, response); break;
-    case "text/plain":
-    default:
-        view.executeText(request, container.attributes, response); break;
+    if (view) {
+        // trigger the response
+        // bit hacky for determining the response content type
+        var responseType = (view.headers && view.headers['Content-Type']) || 'text/plain';
+        switch (responseType) {
+        case "application/json":
+            view.executeJson(Request, container.attributes, response); break;
+        case "text/plain":
+        default:
+            view.executeText(request, container.attributes, response); break;
+        }
+    } else {
+        response.writeHead(500, {
+            "Content-Type": "text/plain"
+        });
+        response.write("500 - Internal server error occurred. (Terminal)")
+        response.end();
     }
 }).listen(8080);

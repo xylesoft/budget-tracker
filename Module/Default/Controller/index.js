@@ -1,12 +1,12 @@
 require('mootools');
-require('../../../Controller/Controller');
+var Controller = require('../../../Controller/Controller');
 
 /**
  *The Default Index Controller
  *
  */
-Xylesoft.controllers.DefaultIndexController = new Class({
-    Extends: Xylesoft.component.Controller,
+module.exports = new Class({
+    Extends: Controller,
     name: 'Xylesoft.controllers.DefaultIndexController',
     module: 'Default',
     executeGET: function(request, attributes) {

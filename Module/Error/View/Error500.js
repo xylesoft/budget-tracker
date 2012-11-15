@@ -1,8 +1,9 @@
 require('mootools');
 
 /**
+ * The View for Error 500 Responses.
  */
-Xylesoft.views.ErrorError500 = new Class({
+module.exports = new Class({
     executeText: function(request, attributes, response) {
         response.writeHead(500, {
             "Content-Type": "text/plain"
